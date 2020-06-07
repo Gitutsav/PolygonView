@@ -1,0 +1,3 @@
+include ':PolygonView'
+include ':app'
+rootProject.name = "PolygonalView"
