@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PolygonView">
+        <attr name="background_colour" format="reference|color"/>
+        <attr format="reference|color" name="border_colour"/>
+        <attr format="dimension" name="border_radius"/>
+        <attr format="dimension" name="border_width"/>
+        <attr format="dimension" name="shadow"/>
+        <attr format="dimension" name="dash_width"/>
+        <attr format="dimension" name="dash_gap"/>
+        <attr name="bitmap_rotation" format="integer"/>
+        <attr name="padding" format="dimension"/>
+        <attr format="reference" name="background_bitmap"/>
+        <attr format="integer" name="num_of_sides"/>
+        <attr format="enum" name="orientation">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+    </declare-styleable></resources>
