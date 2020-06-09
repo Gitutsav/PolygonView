@@ -22,6 +22,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +93,7 @@ public class PolygonView extends View {
     public void setNumberOfSides(int numberOfSides) {
         this.numberOfSides = numberOfSides;
         postInvalidate();
-        requestLayout();
+        
     }
 
     public int getOrientation() {
@@ -102,7 +103,7 @@ public class PolygonView extends View {
     public void setOrientation(int orientation) {
         this.orientation = orientation;
         postInvalidate();
-        requestLayout();
+        
     }
 
     public float getBorderRadius() {
@@ -120,7 +121,7 @@ public class PolygonView extends View {
     public void setBorderRadius(float borderRadius) {
         this.borderRadius = borderRadius;
         postInvalidate();
-        requestLayout();
+        
     }
 
     public float getBorderWidth() {
@@ -130,7 +131,7 @@ public class PolygonView extends View {
     public void setBorderWidth(float borderWidth) {
         this.borderWidth = borderWidth;
         postInvalidate();
-        requestLayout();
+        
     }
 
     public Drawable getBackgroundBitmap() {
@@ -140,7 +141,7 @@ public class PolygonView extends View {
     public void setBackgroundBitmap(Drawable backgroundBitmap) {
         this.backgroundBitmap = backgroundBitmap;
         postInvalidate();
-        requestLayout();
+        
     }
 
 
@@ -151,7 +152,7 @@ public class PolygonView extends View {
     public void setShadow(float elevation) {
         this.shadow = elevation;
         postInvalidate();
-        requestLayout();
+        
     }
 
     public int getBorderColour() {
@@ -161,7 +162,7 @@ public class PolygonView extends View {
     public void setBorderColour(int borderColour) {
         this.borderColour = borderColour;
         postInvalidate();
-        requestLayout();
+        
     }
 
     public int getBackgroundColour() {
@@ -171,7 +172,7 @@ public class PolygonView extends View {
     public void setBackgroundColour(int backgroundColour) {
         this.backgroundColour = backgroundColour;
         postInvalidate();
-        requestLayout();
+        
     }
 
     @Retention(RetentionPolicy.SOURCE)
@@ -196,35 +197,35 @@ public class PolygonView extends View {
 
     private void init(AttributeSet attrs) {
 
-        setPaints();
+       // setPaints();
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.PolygonView);
         try {
             orientation = a.getInt(R.styleable.PolygonView_orientation, Orientation.VERTICAL);
-            setOrientation(orientation);
+           // setOrientation(orientation);
             borderRadius = a.getDimensionPixelSize(R.styleable.PolygonView_border_radius, 0);
-            setBorderRadius(borderRadius);
+           // setBorderRadius(borderRadius);
             borderColour = a.getColor(R.styleable.PolygonView_border_colour, 0);
-            setBorderColour(borderColour);
+          //  setBorderColour(borderColour);
             borderWidth = a.getDimensionPixelSize(R.styleable.PolygonView_border_width, 0);
-            setBorderWidth(borderWidth);
+          //  setBorderWidth(borderWidth);
             shadow = a.getDimension(R.styleable.PolygonView_shadow, 0);
-            setShadow(shadow);
+          //  setShadow(shadow);
             backgroundBitmap = a.getDrawable(R.styleable.PolygonView_background_bitmap);
-            setBackgroundBitmap(backgroundBitmap);
+           // setBackgroundBitmap(backgroundBitmap);
             backgroundColour = a.getColor(R.styleable.PolygonView_background_colour, 0);
-            setBackgroundColour(backgroundColour);
+          //  setBackgroundColour(backgroundColour);
             numberOfSides = a.getInt(R.styleable.PolygonView_num_of_sides, 0);
-            setNumberOfSides(numberOfSides);
+          //  setNumberOfSides(numberOfSides);
             padding =  a.getDimension(R.styleable.PolygonView_padding, 0);
-            setPadding(padding);
+          //  setPadding(padding);
             dashWidth =  a.getDimension(R.styleable.PolygonView_dash_width, 0);
-            setDashWidth(dashWidth);
+          //  setDashWidth(dashWidth);
             dashGap =  a.getDimension(R.styleable.PolygonView_dash_gap, 0);
-            setDashGap(dashGap);
-            bitmapRotation =  a.getInt(R.styleable.PolygonView_background_bitmap, 0);
-            setBitmapRotation(bitmapRotation);
-            setPaints();
+          //  setDashGap(dashGap);
+            bitmapRotation =  a.getInt(R.styleable.PolygonView_bitmap_rotation, 0);
+           // setBitmapRotation(bitmapRotation);
+           // setPaints();
         } finally {
             a.recycle();
         }
@@ -236,8 +237,6 @@ public class PolygonView extends View {
         dashPaint.setPathEffect(cornerPathEffect);
         dashPaint.setColor(backgroundColour);
         dashPaint.setStyle(Style.FILL);
-
-
 
         borderPaint.setColor(borderColour);
         borderPaint.setStyle(Style.STROKE);
@@ -263,7 +262,7 @@ public class PolygonView extends View {
 
         int w = getWidth();
         int h = getHeight();
-
+        setPaints();
         CornerPathEffect cornerPathEffect =  new CornerPathEffect(borderRadius);
         PathEffect[] pathEffects = new PathEffect[3];
         pathEffects[0] = new DashPathEffect(new float[] { dashWidth, dashGap}, 0);
@@ -271,17 +270,25 @@ public class PolygonView extends View {
         pathEffects[2] = new ComposePathEffect(pathEffects[0],pathEffects[1]);
         borderPaint.setPathEffect(pathEffects[2]);
 
-        if(backgroundBitmap!=null){
-            Bitmap mBitmap = convertToBitmap(backgroundBitmap, w, h);
-            Matrix matrix = new Matrix();
-            matrix.postRotate(bitmapRotation);
-            Bitmap rotatedBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
-            BitmapShader bitmapShader = new BitmapShader(rotatedBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-            dashPaint.setShader(bitmapShader);
-        }
+
+        Paint bpaint = new Paint();
+        bpaint.setAntiAlias(true);
+        bpaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
         canvas.drawPath(createClipPath(w, h), dashPaint);
         canvas.drawPath(createClipPath(w, h), borderPaint);
+        if(backgroundBitmap!=null){
+           Bitmap mBitmap = convertToBitmap(backgroundBitmap, w, h);
+           Matrix matrix = new Matrix();
+           matrix.postRotate(bitmapRotation);
+           Bitmap rotatedBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+           //BitmapShader bitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+           // dashPaint.setShader(bitmapShader);
+            canvas.drawBitmap(rotatedBitmap, 0, 0, bpaint);
+
+        }
+
+
 
     }
 
@@ -309,11 +316,6 @@ public class PolygonView extends View {
 
         polygonPath.close();
         return polygonPath;
-    }
-
-    @Override
-    public void setPadding(int left, int top, int right, int bottom) {
-        super.setPadding(left, top, right, bottom);
     }
 
 }

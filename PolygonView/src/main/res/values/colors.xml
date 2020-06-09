@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="white">#ffffff</color>
-    <color name="grey">#cecece</color>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<color name="colorPrimary">#008577</color>
+<color name="jogo_blue">#35AAE3</color>
+<color name="white">#ffffff</color>
+<color name="skill_background">#D5D6E1</color>
+<color name="booking_selected_background">#636BD9</color>
+<color name="little_less_dark">#7d7d7d</color>
+<color name="red_trans">#88ee304b</color>
+<color name="danger">#CF4848</color>
+<color name="color_green">#43cf87</color>
+<color name="background_grey">#808080</color>
+<color name="translucent_white">#eeffffff</color>
+<color name="translucent_darker">#77000000</color>
+<color name="translucent_dark">#55000000</color>
+<color name="translucent_dark_light">#44000000</color>
+<color name="translucent_dark_lighter">#22000000</color>
+<color name="black">#000000</color>
+<color name="gold">#D3B85D</color>
+<color name="green_bg_dark">#c6f6d2</color>
+<color name="progress_bar_color">#FF8354</color>
+<color name="app_color">#FF8354</color>
+<color name="color_black">#454553</color>
+<color name="color_black_light">#656563</color>
+<color name="color_grey">#9292AF</color>
+<color name="color_light_grey">#DEE3F2</color>
+<color name="visible_color_grey">#ACADB5</color>
+<color name="disable_btn_color">#F8C7B6</color>
+<color name="date_toggle_stroke">#CDD4E8</color>
+<color name="date_toggle_background">#F7F8FA</color>
+<color name="grey">#cecece</color>
+<color name="light_grey">#eee</color>
+<color name="dark_grey">#aeaeae</color>
+<color name="end_color">#88A8FA</color>
+    <color name="short_notice_background">#4682B4</color>
+    <color name="session_countdown_bg">#EE3577</color>
 </resources>
