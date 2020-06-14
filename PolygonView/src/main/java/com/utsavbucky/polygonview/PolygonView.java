@@ -150,8 +150,8 @@ public class PolygonView extends View {
         return shadow;
     }
 
-    public void setShadow(float elevation) {
-        this.shadow = elevation;
+    public void setShadow(float shadow) {
+        this.shadow = shadow;
         postInvalidate();
         
     }
@@ -259,22 +259,27 @@ public class PolygonView extends View {
         pathEffects[2] = new ComposePathEffect(pathEffects[0],pathEffects[1]);
         borderPaint.setPathEffect(pathEffects[2]);
 
+        if(numberOfSides>3) {
 
-        Paint bpaint = new Paint();
-        bpaint.setAntiAlias(true);
-        bpaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+            Paint bpaint = new Paint();
+            bpaint.setAntiAlias(true);
+            bpaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
-        canvas.drawPath(createClipPath(w , h , canvas), dashPaint);
-        canvas.restore();
-        if(backgroundBitmap!=null){
-            Bitmap mBitmap = convertToBitmap(backgroundBitmap, w, h);
-            Matrix matrix = new Matrix();
-            matrix.postRotate(bitmapRotation);
-            Bitmap rotatedBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
-            canvas.drawBitmap(rotatedBitmap, 0, 0, bpaint);
+            canvas.drawPath(createClipPath(w, h, canvas), dashPaint);
+            canvas.restore();
+            if (backgroundBitmap != null) {
+                Bitmap mBitmap = convertToBitmap(backgroundBitmap, w, h);
+                Matrix matrix = new Matrix();
+                matrix.postRotate(bitmapRotation);
+                Bitmap rotatedBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+                canvas.drawBitmap(rotatedBitmap, 0, 0, bpaint);
+            }
+            canvas.drawPath(createClipPath(w, h, canvas), borderPaint);
+            canvas.restore();
+        }else {
+            canvas.drawLine(0,h/2,w,h/2,borderPaint);
+            canvas.restore();
         }
-        canvas.drawPath(createClipPath(w , h ,canvas), borderPaint);
-        canvas.restore();
 
 
 
